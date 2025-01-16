@@ -4,6 +4,8 @@
 
 (def todos-table "todos")
 
+(def dynamodb-host (or (System/getenv "DYNAMODB_HOST") "localhost"))
+
 (def ddb (aws/client
            {:api :dynamodb
             :credentials-provider (credentials/basic-credentials-provider
@@ -11,7 +13,7 @@
                                      :secret-access-key "FAKE"})
             :region "us-east-1"
             :endpoint-override {:protocol :http
-                                :hostname "localhost"
+                                :hostname dynamodb-host
                                 :port 8000}}))
 
 (defn create-table! []
@@ -65,7 +67,7 @@
 (defn get-all-todos []
   (let [result (aws/invoke ddb
                            {:op :Scan
-                            :reqest {:TableName todos-table}})]
+                            :request {:TableName todos-table}})]
     (->> (:Items result)
          (map <-ddb-item))))
 

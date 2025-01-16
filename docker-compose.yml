@@ -8,3 +8,20 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+    networks:
+      - todo-network
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DYNAMODB_HOST=dynamodb-local
+    depends_on:
+      - dynamodb-local
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge

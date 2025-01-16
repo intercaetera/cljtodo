@@ -1,4 +1,5 @@
 (ns todolist.core
+  (:gen-class)
   (:require [ring.adapter.jetty :refer [run-jetty]]
             [compojure.core :refer :all]
             [compojure.route :as route]

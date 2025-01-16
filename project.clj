@@ -1,6 +1,7 @@
 (defproject todolist "0.1.0-SNAPSHOT"
   :description "A simple todolist app"
   :main todolist.core
+  :aot [todolist.core]
   :plugins [[com.github.liquidz/antq "2.11.1264"]]
   :dependencies [[org.clojure/clojure "1.12.0"]
                  [ring/ring-core "1.13.0"]
